@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>StreakSync</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warn: #f59e0b;
+      --border: #334155;
+    }
+    body {
+      margin: 0;
+      padding: 16px;
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .logo { font-size: 16px; font-weight: 700; }
+    .icon-btn {
+      background: none; border: none; color: var(--text-muted); cursor: pointer;
+      font-size: 16px; padding: 4px; border-radius: 4px;
+    }
+    .icon-btn:hover { color: var(--text); background: var(--border); }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .summary { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .summary.done { color: var(--success); }
+    .summary.todo { color: var(--warn); }
+    .sub { font-size: 11px; color: var(--text-muted); }
+    .platform-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 14px; padding: 8px 0; border-top: 1px solid var(--border);
+    }
+    .platform-row:first-child { border-top: none; padding-top: 0; }
+    .streak { font-weight: 700; color: var(--warn); margin-right: 8px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+    .badge.success { background-color: rgba(34, 197, 94, 0.2); color: var(--success); }
+    .badge.danger { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
+    .badge.muted { background-color: rgba(148, 163, 184, 0.2); color: var(--text-muted); }
+    .btn {
+      width: 100%; background-color: var(--primary); color: white; border: none; border-radius: 6px;
+      padding: 9px 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .btn:hover { background-color: var(--primary-hover); }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .footer { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 10px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">⚡ StreakSync</div>
+    <button id="openSettings" class="icon-btn" title="Settings">⚙️</button>
+  </div>
+
+  <div id="setup" class="card hidden">
+    <div class="summary">Welcome!</div>
+    <div class="sub" style="margin-bottom: 10px;">Pick GitHub, LeetCode or GFG and get reminded before your streak breaks.</div>
+    <button id="setupBtn" class="btn">Get started</button>
+  </div>
+
+  <div id="main" class="hidden">
+    <div class="card">
+      <div id="summary" class="summary">Checking...</div>
+      <div id="checkedAt" class="sub"></div>
+    </div>
+    <div class="card" id="platforms"></div>
+    <button id="syncNowBtn" class="btn">Check now</button>
+    <div class="footer" id="footer"></div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

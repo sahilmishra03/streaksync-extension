@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsml2sTlDMHHBbST+kY07m6rlzs/ZH+uboaFzsrWAqxgk6jfUo3fWAQo6UsP1kNhvF2PoWE2+MMDlIBNIkiGFFhKQavp9FSteh0uHDyg6Cy6my/asi4F3vTgIpOYRH8uVoAHIGgkI8pVShC8MAFACnVosOY7RqawkVUJmGpeYuvnAbADbz4YvFEgjKzpRP7DUN+1+0NB94Upjj9D7cG7p9adsNZXYY8HuksfSAN35vVjtul56AIae3Jr6SOT2UpWGdfk31OUkPWcSTpH7Hi9newXyYic8DGBph3lclR8zG+dm+bCHDBzEXHplidPPPclJ4Ldzf88AYybVLapzh+ypzQIDAQAB",
+  "name": "StreakSync: GitHub, LeetCode & GFG Streak Reminder",
+  "version": "2.0.0",
+  "description": "Never break your streak. Reminds you during the day about GitHub, LeetCode and GeeksforGeeks streaks you have not finished yet.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "identity",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://api.github.com/*",
+    "https://leetcode.com/*",
+    "https://practiceapi.geeksforgeeks.org/*",
+    "https://www.geeksforgeeks.org/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}

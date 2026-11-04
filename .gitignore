@@ -1,0 +1,13 @@
+# Secrets (never commit)
+.env
+.env.*
+!.env.example
+.dev.vars
+*.pem
+
+# Wrangler / Node
+.wrangler/
+node_modules/
+
+# Build output
+*.zip

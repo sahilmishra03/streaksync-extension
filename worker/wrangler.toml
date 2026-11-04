@@ -1,0 +1,20 @@
+name = "streaksync-api"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+account_id = "82376e1ee0ea4e591f162ee5c654d33f"
+
+# Checks due users every 5 minutes, so reminder emails go out even when the user's laptop is off
+[triggers]
+crons = ["*/5 * * * *"]
+
+[vars]
+# Public values only. Secrets (GITHUB_CLIENT_SECRET, BREVO_API_KEY, TOKEN_KEY) live in Cloudflare,
+# uploaded from worker/.env with `npx wrangler secret bulk .env`. See .env.example.
+GITHUB_CLIENT_ID = "Ov23linJqaHHMZAjZ0JU"
+SENDER_EMAIL = "sahilmishra03032005@gmail.com"
+SENDER_NAME = "StreakSync"
+
+# Stores each user's settings and encrypted GitHub token
+[[kv_namespaces]]
+binding = "STORE"
+id = "dd1c1e76563a4fae940c75bf1ffcf0e8"
