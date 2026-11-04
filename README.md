@@ -1,7 +1,7 @@
 # StreakSync ⚡
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin: 24px 0;">
-<img src="https://github.com/sahilmishra03/streaksync-extension/raw/main/website/public/logo-mark.png" alt="StreakSync Logo" width="120" height="120">
+<div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin: 32px 0;">
+<img src="https://github.com/sahilmishra03/streaksync-extension/raw/main/website/public/logo-mark.png" alt="StreakSync Logo" width="160" height="160">
 </div>
 
 > **Never break your GitHub, LeetCode, and GeeksforGeeks streaks.**
