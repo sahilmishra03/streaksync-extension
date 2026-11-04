@@ -33,7 +33,7 @@ Work in this order.
 - [ ] Deploy the website on Vercel with the custom domain (`streaksync.sahilmishra.dev`)
 - [x] Put the real domain in `extension/config.js` (`WEBSITE_URL`, `SETTINGS_ORIGINS`) and `manifest.json` (`externally_connectable`), then rebuild the zip
 - [x] Update `SITE.url` in `website/src/lib/site.ts` to `streaksync.sahilmishra.dev`
-- [ ] Commit and push the repo to GitHub
+- [x] Commit and push the repo to GitHub
 
 ## Done this round
 - [x] Reminder email redesigned: logo, one meme per case (1, 2 or 3 left), plain list, site link in the footer. Preview: `node scripts/preview-emails.mjs` writes `email-previews/`
