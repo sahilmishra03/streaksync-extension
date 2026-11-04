@@ -1,0 +1,27 @@
+{
+  "name": "streaksync",
+  "private": true,
+  "description": "StreakSync: Chrome extension, website and Cloudflare Worker",
+  "type": "module",
+  "engines": {
+    "node": ">=22.8"
+  },
+  "scripts": {
+    "setup": "npm install && npm --prefix website install",
+    "dev": "npm --prefix website run dev",
+    "format": "prettier --write . && npm --prefix website run format",
+    "lint": "npm --prefix website run lint && node scripts/check-extension.mjs",
+    "check": "prettier --check . && npm --prefix website run check && node scripts/check-extension.mjs && npm test",
+    "build": "npm --prefix website run build",
+    "zip": "node scripts/zip-extension.mjs",
+    "deploy:web": "npm run build && wrangler pages deploy website/out --project-name streaksync --branch main",
+    "deploy:api": "cd worker && wrangler deploy",
+    "secrets:api": "cd worker && wrangler secret bulk .env",
+    "logs:api": "cd worker && wrangler tail",
+    "test": "node --test --test-isolation=none --test-timeout=20000 tests/extension.test.mjs tests/worker.test.mjs"
+  },
+  "devDependencies": {
+    "prettier": "^3",
+    "wrangler": "^4"
+  }
+}

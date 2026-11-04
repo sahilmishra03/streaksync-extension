@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="5 3 54 56" width="512" height="512">
+  <!-- StreakSync mark: three rising streak bars, the tallest lit by an amber flame.
+       viewBox is cropped tight so icons use the whole square. No background. -->
+  <rect x="9" y="40" width="12" height="18" rx="2" fill="#F4F4F0"/>
+  <rect x="26" y="30" width="12" height="28" rx="2" fill="#F4F4F0"/>
+  <rect x="43" y="22" width="12" height="36" rx="2" fill="#F4F4F0"/>
+  <path d="M43 19 H55 C55 13 52.5 9 49 4 C45.5 9 43 13 43 19 Z" fill="#F5A524"/>
+</svg>

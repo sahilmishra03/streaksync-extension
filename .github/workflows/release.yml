@@ -1,0 +1,78 @@
+# Push to main with a new version in extension/manifest.json and this:
+#   1. runs the full CI (tests, website build)
+#   2. tags v<version> and creates a GitHub release with the zip attached
+#   3. if Chrome Web Store secrets are set, uploads and publishes the new version there
+#      (that is what makes installed copies update themselves)
+# Same version as an existing tag = nothing to release, the workflow stops quietly.
+#
+# Chrome Web Store secrets (optional, Settings > Secrets and variables > Actions):
+#   CWS_EXTENSION_ID, CWS_CLIENT_ID, CWS_CLIENT_SECRET, CWS_REFRESH_TOKEN
+name: Release extension
+
+on:
+  push:
+    branches: [main]
+    paths: ['extension/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: release
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.v.outputs.version }}
+      is_new: ${{ steps.v.outputs.is_new }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: v
+        run: |
+          VERSION=$(node -p "require('./extension/manifest.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "is_new=false" >> "$GITHUB_OUTPUT"
+            echo "v$VERSION already released. Bump the version in extension/manifest.json to release."
+          else
+            echo "is_new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  ci:
+    needs: version
+    if: needs.version.outputs.is_new == 'true'
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: [version, ci]
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/zip-extension.mjs
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: StreakSync v${{ env.VERSION }}
+          files: dist/streaksync-extension.zip
+          generate_release_notes: true
+
+      - name: Publish to the Chrome Web Store
+        env:
+          EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+        run: |
+          if [ -z "$EXTENSION_ID" ] || [ -z "$REFRESH_TOKEN" ]; then
+            echo "Chrome Web Store secrets not set, skipping store upload."
+            exit 0
+          fi
+          npx --yes chrome-webstore-upload-cli@3 upload --source dist/streaksync-extension.zip --auto-publish

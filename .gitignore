@@ -9,5 +9,14 @@
 .wrangler/
 node_modules/
 
+# Next.js build cache
+.next/
+
 # Build output
 *.zip
+
+# Extension zip built by npm run zip
+dist/
+
+# Local email previews (node scripts/preview-emails.mjs)
+email-previews/

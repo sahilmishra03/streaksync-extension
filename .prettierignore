@@ -1,0 +1,7 @@
+# The website has its own Prettier setup (website/.prettierrc.json)
+website
+node_modules
+dist
+*.md
+package-lock.json
+worker/.wrangler

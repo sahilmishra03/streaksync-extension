@@ -1,0 +1,10 @@
+{
+  "background": "solid deep royal blue (#1F5FD6)",
+  "mark": "off-white (#F4F4F0)",
+  "accent": "warm amber (#F5A524)",
+  "directions": {
+    "A": "a sharp angular flame built from three rising vertical bars of increasing height, like a daily streak chart that becomes fire; off-white bars with an amber tip on the tallest bar",
+    "B": "a bold geometric lightning bolt whose upper half flares into a pointed flame shape; off-white bolt with one amber inner flame facet",
+    "C": "a square grid of four by four small off-white squares where a diagonal run of squares is filled amber, forming a rising streak line from bottom-left to top-right"
+  }
+}

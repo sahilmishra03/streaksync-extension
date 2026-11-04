@@ -1,0 +1,1776 @@
+/* Landing-page clips. Feature clips share one 7s loop ("k-*"): the action happens first,
+   the result appears at 46%, holds, then everything resets. How it works is a 12s day ("hw-*"). */
+
+.hw-n1,
+.hw-n2,
+.hw-n3,
+.hw-n4,
+.hw-before-gh,
+.hw-after-gh,
+.hw-border-gh,
+.hw-before-lc,
+.hw-after-lc,
+.hw-border-lc {
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.k-before {
+  animation: k-before 7s infinite;
+}
+.k-after {
+  animation: k-after 7s infinite;
+}
+@keyframes k-before {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  47%,
+  94% {
+    opacity: 0;
+  }
+  97%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes k-after {
+  0%,
+  44% {
+    opacity: 0;
+  }
+  47%,
+  94% {
+    opacity: 1;
+  }
+  97%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* LeetCode: "Accepted" drops in, then the row turns done */
+.k-drop {
+  animation: k-drop 7s infinite;
+}
+@keyframes k-drop {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  17%,
+  90% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.k-row-done {
+  animation: k-row-done 7s infinite;
+}
+@keyframes k-row-done {
+  0%,
+  44%,
+  97%,
+  100% {
+    border-color: rgba(245, 165, 36, 0.35);
+  }
+  47%,
+  94% {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* GFG: cursor clicks Detect, account found, today's square fills */
+.k-gfg-cursor {
+  animation: k-gfg-cursor 7s infinite;
+}
+@keyframes k-gfg-cursor {
+  0%,
+  8% {
+    transform: translate(120px, 190px);
+  }
+  36%,
+  38% {
+    transform: translate(214px, 52px);
+  }
+  41% {
+    transform: translate(214px, 52px) scale(0.85);
+  }
+  44%,
+  60% {
+    transform: translate(214px, 52px);
+  }
+  80%,
+  100% {
+    transform: translate(150px, 205px);
+  }
+}
+.k-press {
+  animation: k-press 7s infinite;
+}
+@keyframes k-press {
+  0%,
+  39%,
+  43%,
+  100% {
+    transform: none;
+  }
+  41% {
+    transform: scale(0.9);
+  }
+}
+.k-cell {
+  animation: k-cell 7s infinite;
+}
+@keyframes k-cell {
+  0%,
+  45%,
+  97%,
+  100% {
+    background: rgba(255, 255, 255, 0.06);
+    transform: none;
+  }
+  49% {
+    background: #2f8d46;
+    transform: scale(1.4);
+  }
+  53%,
+  94% {
+    background: #2f8d46;
+    transform: none;
+  }
+}
+
+/* GitHub: "git push" types out, today's square fills */
+.k-type {
+  animation: k-type 7s infinite;
+}
+@keyframes k-type {
+  0%,
+  10% {
+    width: 0;
+  }
+  34%,
+  94% {
+    width: 8ch;
+  }
+  97%,
+  100% {
+    width: 0;
+  }
+}
+.k-type {
+  animation-timing-function: steps(8, end);
+}
+.k-cell-gh {
+  animation: k-cell-gh 7s infinite;
+}
+@keyframes k-cell-gh {
+  0%,
+  45%,
+  97%,
+  100% {
+    background: #eff2f5;
+    transform: none;
+  }
+  49% {
+    background: #40c463;
+    transform: scale(1.5);
+  }
+  53%,
+  94% {
+    background: #40c463;
+    transform: none;
+  }
+}
+
+/* ---------- How it works: one day in 12s ---------- */
+
+.hw-fill {
+  animation: hw-fill 12s infinite linear;
+}
+@keyframes hw-fill {
+  0%,
+  2% {
+    width: 0;
+  }
+  85%,
+  97% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+.hw-n1,
+.hw-n2,
+.hw-n3,
+.hw-n4 {
+  opacity: 0;
+  animation-duration: 12s;
+}
+.hw-n1 {
+  animation-name: hw-n1;
+}
+.hw-n2 {
+  animation-name: hw-n2;
+}
+.hw-n3 {
+  animation-name: hw-n3;
+}
+.hw-n4 {
+  animation-name: hw-n4;
+}
+@keyframes hw-n1 {
+  0%,
+  2% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  5%,
+  21% {
+    opacity: 1;
+    transform: none;
+  }
+  24%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes hw-n2 {
+  0%,
+  28% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  31%,
+  47% {
+    opacity: 1;
+    transform: none;
+  }
+  50%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes hw-n3 {
+  0%,
+  57% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  60%,
+  75% {
+    opacity: 1;
+    transform: none;
+  }
+  78%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes hw-n4 {
+  0%,
+  85% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  88%,
+  96% {
+    opacity: 1;
+    transform: none;
+  }
+  99%,
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* GitHub done at 18% (before 2 PM), LeetCode at 45% (before 6 PM) */
+.hw-before-gh,
+.hw-after-gh,
+.hw-border-gh,
+.hw-before-lc,
+.hw-after-lc,
+.hw-border-lc {
+  animation-duration: 12s;
+}
+.hw-before-gh {
+  animation-name: hw-before-gh;
+}
+.hw-after-gh {
+  animation-name: hw-after-gh;
+}
+.hw-border-gh {
+  animation-name: hw-border-gh;
+}
+.hw-before-lc {
+  animation-name: hw-before-lc;
+}
+.hw-after-lc {
+  animation-name: hw-after-lc;
+}
+.hw-border-lc {
+  animation-name: hw-border-lc;
+}
+@keyframes hw-before-gh {
+  0%,
+  17%,
+  99%,
+  100% {
+    opacity: 1;
+  }
+  19%,
+  97% {
+    opacity: 0;
+  }
+}
+@keyframes hw-after-gh {
+  0%,
+  17%,
+  99%,
+  100% {
+    opacity: 0;
+  }
+  19%,
+  97% {
+    opacity: 1;
+  }
+}
+@keyframes hw-border-gh {
+  0%,
+  17%,
+  99%,
+  100% {
+    border-color: rgba(245, 165, 36, 0.35);
+  }
+  19%,
+  97% {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+@keyframes hw-before-lc {
+  0%,
+  44%,
+  99%,
+  100% {
+    opacity: 1;
+  }
+  46%,
+  97% {
+    opacity: 0;
+  }
+}
+@keyframes hw-after-lc {
+  0%,
+  44%,
+  99%,
+  100% {
+    opacity: 0;
+  }
+  46%,
+  97% {
+    opacity: 1;
+  }
+}
+@keyframes hw-border-lc {
+  0%,
+  44%,
+  99%,
+  100% {
+    border-color: rgba(245, 165, 36, 0.35);
+  }
+  46%,
+  97% {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Reduced motion: one still frame showing the result */
+@media (prefers-reduced-motion: reduce) {
+  [class^="k-"],
+  [class*=" k-"],
+  [class^="hw-"],
+  [class*=" hw-"] {
+    animation: none !important;
+  }
+  .k-before,
+  .k-gfg-cursor,
+  .hw-before-gh,
+  .hw-before-lc,
+  .hw-n1,
+  .hw-n2,
+  .hw-n4 {
+    opacity: 0;
+  }
+  .k-after,
+  .hw-after-gh,
+  .hw-after-lc,
+  .hw-n3 {
+    opacity: 1;
+  }
+  .k-type {
+    width: 8ch;
+  }
+  .k-cell {
+    background: #2f8d46;
+  }
+  .k-cell-gh {
+    background: #40c463;
+  }
+  .hw-fill {
+    width: 66%;
+  }
+}
+
+/* ---------- Install clip: 24s, five scenes (see InstallDemo.tsx) ---------- */
+
+[class^="in-"],
+[class*=" in-"] {
+  animation-duration: 24s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* Cursor (tip offset already taken off) */
+.in-cursor {
+  animation-name: in-cursor;
+  transform-origin: 3px 2px;
+}
+@keyframes in-cursor {
+  0% {
+    transform: translate(560px, 400px);
+  }
+  3%,
+  3.38% {
+    transform: translate(357px, 238px);
+  }
+  3.75% {
+    transform: translate(357px, 238px) scale(0.85);
+  }
+  4.13%,
+  7.5% {
+    transform: translate(357px, 238px);
+  }
+  11.25%,
+  12% {
+    transform: translate(347px, 248px);
+  }
+  12.38% {
+    transform: translate(347px, 248px) scale(0.85);
+  }
+  12.75% {
+    transform: translate(347px, 248px);
+  }
+  13.13% {
+    transform: translate(347px, 248px) scale(0.85);
+  }
+  13.5%,
+  18% {
+    transform: translate(347px, 248px);
+  }
+  23.25%,
+  25.88% {
+    transform: translate(682px, 98px);
+  }
+  26.25% {
+    transform: translate(682px, 98px) scale(0.85);
+  }
+  26.63%,
+  33% {
+    transform: translate(682px, 98px);
+  }
+  36%,
+  36.38% {
+    transform: translate(62px, 148px);
+  }
+  36.75% {
+    transform: translate(62px, 148px) scale(0.85);
+  }
+  37.13%,
+  38.25% {
+    transform: translate(62px, 148px);
+  }
+  40.13% {
+    transform: translate(331px, 163px);
+  }
+  40.5% {
+    transform: translate(331px, 163px) scale(0.85);
+  }
+  40.88%,
+  42% {
+    transform: translate(331px, 163px);
+  }
+  43.88% {
+    transform: translate(521px, 330px);
+  }
+  44.25% {
+    transform: translate(521px, 330px) scale(0.85);
+  }
+  44.63%,
+  49.5% {
+    transform: translate(521px, 330px);
+  }
+  52.5%,
+  52.88% {
+    transform: translate(661px, 51px);
+  }
+  53.25% {
+    transform: translate(661px, 51px) scale(0.85);
+  }
+  53.63%,
+  54.75% {
+    transform: translate(661px, 51px);
+  }
+  57% {
+    transform: translate(671px, 118px);
+  }
+  57.38% {
+    transform: translate(671px, 118px) scale(0.85);
+  }
+  57.75%,
+  60% {
+    transform: translate(671px, 118px);
+  }
+  /* Scene 5: open the popup, Get started, switch on the platforms */
+  75% {
+    transform: translate(671px, 118px);
+  }
+  78% {
+    transform: translate(629px, 51px);
+  }
+  78.5% {
+    transform: translate(629px, 51px) scale(0.85);
+  }
+  79%,
+  80% {
+    transform: translate(629px, 51px);
+  }
+  83% {
+    transform: translate(547px, 214px);
+  }
+  83.5% {
+    transform: translate(547px, 214px) scale(0.85);
+  }
+  84%,
+  85.5% {
+    transform: translate(547px, 214px);
+  }
+  88% {
+    transform: translate(532px, 195px);
+  }
+  88.5% {
+    transform: translate(532px, 195px) scale(0.85);
+  }
+  89% {
+    transform: translate(532px, 195px);
+  }
+  90.5% {
+    transform: translate(532px, 239px);
+  }
+  91% {
+    transform: translate(532px, 239px) scale(0.85);
+  }
+  91.5% {
+    transform: translate(532px, 239px);
+  }
+  93% {
+    transform: translate(532px, 283px);
+  }
+  93.5% {
+    transform: translate(532px, 283px) scale(0.85);
+  }
+  94%,
+  96% {
+    transform: translate(532px, 283px);
+  }
+  99%,
+  100% {
+    transform: translate(560px, 400px);
+  }
+}
+
+/* Generic show/hide helpers */
+@keyframes in-swap-a {
+  0%,
+  19.13%,
+  100% {
+    opacity: 1;
+  }
+  19.88%,
+  99% {
+    opacity: 0;
+  }
+}
+@keyframes in-swap-b {
+  0%,
+  19.13%,
+  100% {
+    opacity: 0;
+  }
+  19.88%,
+  99% {
+    opacity: 1;
+  }
+}
+.in-url-a,
+.in-tabname-a,
+.in-tabicon-a {
+  animation-name: in-swap-a;
+}
+.in-url-b,
+.in-tabname-b,
+.in-tabicon-b {
+  animation-name: in-swap-b;
+}
+
+/* Scene 1 */
+.in-site {
+  animation-name: in-site;
+}
+@keyframes in-site {
+  0%,
+  19.13%,
+  100% {
+    opacity: 1;
+  }
+  19.88%,
+  99% {
+    opacity: 0;
+  }
+}
+.in-dlbtn {
+  animation-name: in-press;
+}
+@keyframes in-press {
+  0%,
+  3.38%,
+  4.5%,
+  100% {
+    filter: none;
+    transform: none;
+  }
+  3.75% {
+    filter: brightness(1.15);
+    transform: scale(0.96);
+  }
+}
+.in-dl {
+  opacity: 0;
+  animation-name: in-dl;
+}
+@keyframes in-dl {
+  0%,
+  4.13% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  4.88%,
+  9.38% {
+    opacity: 1;
+    transform: none;
+  }
+  10.13%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.in-finder {
+  opacity: 0;
+  animation-name: in-finder;
+}
+@keyframes in-finder {
+  0%,
+  8.25% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  9.38%,
+  18.75% {
+    opacity: 1;
+    transform: none;
+  }
+  19.88%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.in-zipfile {
+  animation-name: in-zipfile;
+}
+@keyframes in-zipfile {
+  0%,
+  11.63%,
+  15%,
+  100% {
+    background: transparent;
+  }
+  12%,
+  14.25% {
+    background: rgba(10, 132, 255, 0.14);
+  }
+}
+.in-unzip {
+  opacity: 0;
+  animation-name: in-unzip;
+}
+@keyframes in-unzip {
+  0%,
+  13.88% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  14.63% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  15.38%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scene 2: Developer mode */
+.in-devtoggle {
+  background: #c4c7c5;
+  animation-name: in-devtoggle;
+}
+@keyframes in-devtoggle {
+  0%,
+  26.25%,
+  100% {
+    background: #c4c7c5;
+  }
+  27%,
+  99% {
+    background: #0b57d0;
+  }
+}
+.in-devtoggle-knob {
+  animation-name: in-knob;
+  animation-duration: 24s;
+  animation-iteration-count: infinite;
+}
+@keyframes in-knob {
+  0%,
+  26.25%,
+  100% {
+    transform: none;
+  }
+  27%,
+  99% {
+    transform: translateX(14px);
+  }
+}
+.in-devbar {
+  opacity: 0;
+  animation-name: in-devbar;
+}
+@keyframes in-devbar {
+  0%,
+  26.63%,
+  100% {
+    opacity: 0;
+  }
+  27.38%,
+  99% {
+    opacity: 1;
+  }
+}
+
+/* Scene 3: Load unpacked */
+.in-loadbtn {
+  animation-name: in-loadbtn;
+}
+@keyframes in-loadbtn {
+  0%,
+  36.38%,
+  38.25%,
+  100% {
+    background: transparent;
+  }
+  36.75%,
+  37.88% {
+    background: rgba(11, 87, 208, 0.12);
+  }
+}
+.in-picker {
+  opacity: 0;
+  animation-name: in-picker;
+}
+@keyframes in-picker {
+  0%,
+  37.5% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  38.63%,
+  45.75% {
+    opacity: 1;
+    transform: none;
+  }
+  46.88%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.in-pickrow {
+  animation-name: in-pickrow;
+}
+@keyframes in-pickrow {
+  0%,
+  40.5%,
+  100% {
+    background: transparent;
+    color: #1d1d1f;
+  }
+  40.88%,
+  99% {
+    background: #0a84ff;
+    color: #fff;
+  }
+}
+.in-select {
+  animation-name: in-select;
+}
+@keyframes in-select {
+  0%,
+  43.88%,
+  45%,
+  100% {
+    filter: none;
+  }
+  44.25% {
+    filter: brightness(0.8);
+  }
+}
+.in-card {
+  opacity: 0;
+  animation-name: in-card;
+}
+@keyframes in-card {
+  0%,
+  46.88%,
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  48%,
+  99% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scene 4: pin and set up */
+.in-puzzle {
+  animation-name: in-puzzle;
+}
+@keyframes in-puzzle {
+  0%,
+  52.88%,
+  60.38%,
+  100% {
+    background: transparent;
+  }
+  53.25%,
+  60% {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+.in-menu {
+  opacity: 0;
+  animation-name: in-menu;
+}
+@keyframes in-menu {
+  0%,
+  53.63% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  54.38%,
+  59.63% {
+    opacity: 1;
+    transform: none;
+  }
+  60.38%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.in-pinicon {
+  fill: #9aa0a6;
+  animation-name: in-pinicon;
+}
+@keyframes in-pinicon {
+  0%,
+  57.38%,
+  100% {
+    fill: #9aa0a6;
+  }
+  57.75%,
+  99% {
+    fill: #0b57d0;
+  }
+}
+.in-pin {
+  opacity: 0;
+  animation-name: in-pin;
+}
+@keyframes in-pin {
+  0%,
+  58.13%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  58.88% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  59.63%,
+  99% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.in-tab2 {
+  opacity: 0;
+  animation-name: in-tab2;
+}
+@keyframes in-tab2 {
+  0%,
+  84.5%,
+  100% {
+    opacity: 0;
+  }
+  85.5%,
+  99% {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: the finished state, every step shown */
+@media (prefers-reduced-motion: reduce) {
+  [class^="in-"],
+  [class*=" in-"] {
+    animation: none !important;
+  }
+  .in-site,
+  .in-dl,
+  .in-finder,
+  .in-picker,
+  .in-menu,
+  .in-cursor,
+  .in-url-a,
+  .in-tabname-a,
+  .in-tabicon-a {
+    opacity: 0;
+  }
+  .in-devbar,
+  .in-card,
+  .in-pin,
+  .in-tab2,
+  .in-url-b,
+  .in-tabname-b,
+  .in-tabicon-b {
+    opacity: 1;
+  }
+  .in-devtoggle {
+    background: #0b57d0;
+  }
+  .in-devtoggle-knob {
+    transform: translateX(14px);
+  }
+  .in-step1,
+  .in-step2,
+  .in-step3,
+  .in-step4 {
+    background: #fff;
+    border-color: rgba(38, 35, 34, 0.08);
+  }
+}
+
+/* Steps, dots, captions and progress bars follow the clip. Windows (% of 24s):
+   1: 0-19.5  2: 19.5-34.5  3: 34.5-51  4: 51-75  5: 75-100 */
+.in-step1,
+.in-step2,
+.in-step3,
+.in-step4,
+.in-step5,
+.in-dot1,
+.in-dot2,
+.in-dot3,
+.in-dot4,
+.in-dot5,
+.in-cap1,
+.in-cap2,
+.in-cap3,
+.in-cap4,
+.in-cap5,
+.in-bar1,
+.in-bar2,
+.in-bar3,
+.in-bar4,
+.in-bar5 {
+  animation-duration: 24s;
+  animation-iteration-count: infinite;
+}
+.in-step1,
+.in-step2,
+.in-step3,
+.in-step4,
+.in-step5 {
+  background: transparent;
+  border-color: transparent;
+}
+.in-dot1,
+.in-dot2,
+.in-dot3,
+.in-dot4,
+.in-dot5 {
+  background: rgba(38, 35, 34, 0.06);
+  color: rgba(38, 35, 34, 0.5);
+}
+.in-cap1,
+.in-cap2,
+.in-cap3,
+.in-cap4,
+.in-cap5 {
+  opacity: 0;
+}
+.in-bar1,
+.in-bar2,
+.in-bar3,
+.in-bar4,
+.in-bar5 {
+  width: 0;
+  animation-timing-function: linear;
+}
+.in-step1 {
+  animation-name: in-step1;
+}
+.in-dot1 {
+  animation-name: in-dot1;
+}
+.in-cap1 {
+  animation-name: in-cap1;
+}
+.in-bar1 {
+  animation-name: in-bar1;
+}
+@keyframes in-step1 {
+  0%,
+  19%,
+  100% {
+    background: #fff;
+    border-color: rgba(31, 95, 214, 0.35);
+  }
+  20%,
+  99% {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+@keyframes in-dot1 {
+  0%,
+  19%,
+  100% {
+    background: #1f5fd6;
+    color: #fff;
+  }
+  20%,
+  99% {
+    background: rgba(31, 95, 214, 0.12);
+    color: #1f5fd6;
+  }
+}
+@keyframes in-cap1 {
+  0%,
+  19%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  99% {
+    opacity: 0;
+  }
+}
+@keyframes in-bar1 {
+  0% {
+    width: 0;
+  }
+  19.5%,
+  99% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+.in-step2 {
+  animation-name: in-step2;
+}
+.in-dot2 {
+  animation-name: in-dot2;
+}
+.in-cap2 {
+  animation-name: in-cap2;
+}
+.in-bar2 {
+  animation-name: in-bar2;
+}
+@keyframes in-step2 {
+  0%,
+  19% {
+    background: transparent;
+    border-color: transparent;
+  }
+  20%,
+  34% {
+    background: #fff;
+    border-color: rgba(31, 95, 214, 0.35);
+  }
+  35%,
+  99% {
+    background: transparent;
+    border-color: transparent;
+  }
+  100% {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+@keyframes in-dot2 {
+  0%,
+  19% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+  20%,
+  34% {
+    background: #1f5fd6;
+    color: #fff;
+  }
+  35%,
+  99% {
+    background: rgba(31, 95, 214, 0.12);
+    color: #1f5fd6;
+  }
+  100% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+}
+@keyframes in-cap2 {
+  0%,
+  19% {
+    opacity: 0;
+  }
+  20%,
+  34% {
+    opacity: 1;
+  }
+  35%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes in-bar2 {
+  0%,
+  19.5% {
+    width: 0;
+  }
+  34.5%,
+  99% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+.in-step3 {
+  animation-name: in-step3;
+}
+.in-dot3 {
+  animation-name: in-dot3;
+}
+.in-cap3 {
+  animation-name: in-cap3;
+}
+.in-bar3 {
+  animation-name: in-bar3;
+}
+@keyframes in-step3 {
+  0%,
+  34% {
+    background: transparent;
+    border-color: transparent;
+  }
+  35%,
+  50.5% {
+    background: #fff;
+    border-color: rgba(31, 95, 214, 0.35);
+  }
+  51.5%,
+  99% {
+    background: transparent;
+    border-color: transparent;
+  }
+  100% {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+@keyframes in-dot3 {
+  0%,
+  34% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+  35%,
+  50.5% {
+    background: #1f5fd6;
+    color: #fff;
+  }
+  51.5%,
+  99% {
+    background: rgba(31, 95, 214, 0.12);
+    color: #1f5fd6;
+  }
+  100% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+}
+@keyframes in-cap3 {
+  0%,
+  34% {
+    opacity: 0;
+  }
+  35%,
+  50.5% {
+    opacity: 1;
+  }
+  51.5%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes in-bar3 {
+  0%,
+  34.5% {
+    width: 0;
+  }
+  51%,
+  99% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+.in-step4 {
+  animation-name: in-step4;
+}
+.in-dot4 {
+  animation-name: in-dot4;
+}
+.in-cap4 {
+  animation-name: in-cap4;
+}
+.in-bar4 {
+  animation-name: in-bar4;
+}
+@keyframes in-step4 {
+  0%,
+  50.5% {
+    background: transparent;
+    border-color: transparent;
+  }
+  51.5%,
+  74.5% {
+    background: #fff;
+    border-color: rgba(31, 95, 214, 0.35);
+  }
+  75.5%,
+  99% {
+    background: transparent;
+    border-color: transparent;
+  }
+  100% {
+    background: transparent;
+    border-color: transparent;
+  }
+}
+@keyframes in-dot4 {
+  0%,
+  50.5% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+  51.5%,
+  74.5% {
+    background: #1f5fd6;
+    color: #fff;
+  }
+  75.5%,
+  99% {
+    background: rgba(31, 95, 214, 0.12);
+    color: #1f5fd6;
+  }
+  100% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+}
+@keyframes in-cap4 {
+  0%,
+  50.5% {
+    opacity: 0;
+  }
+  51.5%,
+  74.5% {
+    opacity: 1;
+  }
+  75.5%,
+  99% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes in-bar4 {
+  0%,
+  51% {
+    width: 0;
+  }
+  75%,
+  99% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
+}
+.in-step5 {
+  animation-name: in-step5;
+}
+.in-dot5 {
+  animation-name: in-dot5;
+}
+.in-cap5 {
+  animation-name: in-cap5;
+}
+.in-bar5 {
+  animation-name: in-bar5;
+}
+@keyframes in-step5 {
+  0%,
+  74.5%,
+  100% {
+    background: transparent;
+    border-color: transparent;
+  }
+  75.5%,
+  99% {
+    background: #fff;
+    border-color: rgba(31, 95, 214, 0.35);
+  }
+}
+@keyframes in-dot5 {
+  0%,
+  74.5%,
+  100% {
+    background: rgba(38, 35, 34, 0.06);
+    color: rgba(38, 35, 34, 0.5);
+  }
+  75.5%,
+  99% {
+    background: #1f5fd6;
+    color: #fff;
+  }
+}
+@keyframes in-cap5 {
+  0%,
+  74.5%,
+  100% {
+    opacity: 0;
+  }
+  75.5%,
+  99% {
+    opacity: 1;
+  }
+}
+@keyframes in-bar5 {
+  0%,
+  75% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .in-cap1,
+  .in-cap2,
+  .in-cap3,
+  .in-cap4 {
+    opacity: 0;
+  }
+  .in-cap5 {
+    opacity: 1;
+  }
+  .in-bar1,
+  .in-bar2,
+  .in-bar3,
+  .in-bar4,
+  .in-bar5 {
+    width: 100%;
+  }
+  .in-dot1,
+  .in-dot2,
+  .in-dot3,
+  .in-dot4,
+  .in-dot5 {
+    background: rgba(31, 95, 214, 0.12);
+    color: #1f5fd6;
+  }
+  .in-step1,
+  .in-step2,
+  .in-step3,
+  .in-step4,
+  .in-step5 {
+    background: #fff;
+    border-color: rgba(38, 35, 34, 0.08);
+  }
+}
+
+/* ---------- Install clip, scene 5: quick setup (75-100% of 24s) ---------- */
+
+/* Address bar: chrome://extensions until the setup page opens at 85% */
+.in-url-b {
+  animation-name: in-url-b5;
+}
+@keyframes in-url-b5 {
+  0%,
+  19.13%,
+  85%,
+  100% {
+    opacity: 0;
+  }
+  19.88%,
+  84.5% {
+    opacity: 1;
+  }
+}
+.in-url-c {
+  opacity: 0;
+  animation-name: in-late;
+}
+@keyframes in-late {
+  0%,
+  84.5%,
+  100% {
+    opacity: 0;
+  }
+  85.5%,
+  99% {
+    opacity: 1;
+  }
+}
+
+/* Pinned icon is clicked */
+.in-pinclick {
+  animation-name: in-pinclick;
+}
+@keyframes in-pinclick {
+  0%,
+  78%,
+  83.5%,
+  100% {
+    box-shadow: none;
+  }
+  78.5%,
+  83% {
+    box-shadow: 0 0 0 3px rgba(11, 87, 208, 0.25);
+  }
+}
+
+/* Popup on first run: "Get started" */
+.in-pop {
+  opacity: 0;
+  animation-name: in-pop;
+}
+@keyframes in-pop {
+  0%,
+  79% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  80%,
+  84% {
+    opacity: 1;
+    transform: none;
+  }
+  85%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.in-getstarted {
+  animation-name: in-getstarted;
+}
+@keyframes in-getstarted {
+  0%,
+  83.2%,
+  84%,
+  100% {
+    filter: none;
+  }
+  83.6% {
+    filter: brightness(1.25);
+  }
+}
+
+/* Setup page */
+.in-setup {
+  opacity: 0;
+  animation-name: in-late;
+}
+.in-tog1,
+.in-tog2,
+.in-tog3 {
+  background: #3a3a3e;
+}
+.in-tog1 {
+  animation-name: in-tog1;
+}
+.in-tog2 {
+  animation-name: in-tog2;
+}
+.in-tog3 {
+  animation-name: in-tog3;
+}
+.in-knob1 {
+  animation-name: in-knob1;
+}
+.in-knob2 {
+  animation-name: in-knob2;
+}
+.in-knob3 {
+  animation-name: in-knob3;
+}
+.in-ok1 {
+  opacity: 0;
+  animation-name: in-ok1;
+}
+.in-ok2 {
+  opacity: 0;
+  animation-name: in-ok2;
+}
+.in-ok3 {
+  opacity: 0;
+  animation-name: in-ok3;
+}
+@keyframes in-tog1 {
+  0%,
+  88.4%,
+  100% {
+    background: #3a3a3e;
+  }
+  88.8%,
+  99% {
+    background: #0b63e5;
+  }
+}
+@keyframes in-tog2 {
+  0%,
+  90.9%,
+  100% {
+    background: #3a3a3e;
+  }
+  91.3%,
+  99% {
+    background: #0b63e5;
+  }
+}
+@keyframes in-tog3 {
+  0%,
+  93.4%,
+  100% {
+    background: #3a3a3e;
+  }
+  93.8%,
+  99% {
+    background: #0b63e5;
+  }
+}
+@keyframes in-knob1 {
+  0%,
+  88.4%,
+  100% {
+    transform: none;
+  }
+  88.8%,
+  99% {
+    transform: translateX(14px);
+  }
+}
+@keyframes in-knob2 {
+  0%,
+  90.9%,
+  100% {
+    transform: none;
+  }
+  91.3%,
+  99% {
+    transform: translateX(14px);
+  }
+}
+@keyframes in-knob3 {
+  0%,
+  93.4%,
+  100% {
+    transform: none;
+  }
+  93.8%,
+  99% {
+    transform: translateX(14px);
+  }
+}
+@keyframes in-ok1 {
+  0%,
+  89%,
+  100% {
+    opacity: 0;
+  }
+  89.8%,
+  99% {
+    opacity: 1;
+  }
+}
+@keyframes in-ok2 {
+  0%,
+  91.5%,
+  100% {
+    opacity: 0;
+  }
+  92.3%,
+  99% {
+    opacity: 1;
+  }
+}
+@keyframes in-ok3 {
+  0%,
+  94%,
+  100% {
+    opacity: 0;
+  }
+  94.8%,
+  99% {
+    opacity: 1;
+  }
+}
+.in-allset {
+  opacity: 0;
+  animation-name: in-allset;
+}
+@keyframes in-allset {
+  0%,
+  95%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  96%,
+  99% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .in-url-b,
+  .in-pop {
+    opacity: 0;
+  }
+  .in-url-c,
+  .in-setup,
+  .in-ok1,
+  .in-ok2,
+  .in-ok3,
+  .in-allset {
+    opacity: 1;
+  }
+  .in-tog1,
+  .in-tog2,
+  .in-tog3 {
+    background: #0b63e5;
+  }
+  .in-knob1,
+  .in-knob2,
+  .in-knob3 {
+    transform: translateX(14px);
+  }
+}
+
+/* ---------- Download: platform logos popping up around the card ---------- */
+.pop-tile {
+  opacity: 0;
+  animation: pop-tile 6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes pop-tile {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.4) rotate(var(--r, 0deg));
+  }
+  12% {
+    opacity: 1;
+    transform: translateY(0) scale(1.08) rotate(var(--r, 0deg));
+  }
+  18% {
+    transform: translateY(0) scale(1) rotate(var(--r, 0deg));
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1) rotate(var(--r, 0deg));
+  }
+  86%,
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.85) rotate(var(--r, 0deg));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pop-tile {
+    animation: none;
+    opacity: 1;
+  }
+}

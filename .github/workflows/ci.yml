@@ -1,0 +1,55 @@
+# Runs on every push and pull request. Every job must pass before anything is released or deployed.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+jobs:
+  test:
+    name: Tests (extension + worker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx prettier --check .
+      - run: node scripts/check-extension.mjs
+      - run: npm test
+
+  website:
+    name: Website (lint, types, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm --prefix website ci
+      - run: npx --prefix website prettier --check website/src
+      - run: npm --prefix website run lint
+      - run: npx --prefix website tsc --noEmit -p website
+      # prebuild packs the extension zip into website/public, so the build also checks the zip
+      - run: npm --prefix website run build
+
+  package:
+    name: Package extension
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/zip-extension.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: streaksync-extension
+          path: dist/streaksync-extension.zip

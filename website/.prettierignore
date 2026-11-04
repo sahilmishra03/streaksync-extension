@@ -1,0 +1,7 @@
+.next
+out
+node_modules
+brand/candidates
+package-lock.json
+*.md
+next-env.d.ts

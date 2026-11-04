@@ -1,0 +1,29 @@
+/* Fonts bundled so they work offline (SIL Open Font License, see OFL-LICENSE*.txt).
+   Popup: Geist only.  Settings page: Fraunces headings + Geist Mono text, same as the website. */
+@font-face {
+  font-family: 'Geist';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('geist-variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('geist-mono-variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('fraunces-variable.woff2') format('woff2');
+}
+
+:root {
+  --font-sans: 'Geist', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+}

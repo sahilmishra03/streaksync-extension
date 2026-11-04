@@ -1,0 +1,397 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-geist: var(--font-geist-sans), "Segoe UI", system-ui, sans-serif;
+  --color-sky-top: #1f5fd6;
+  --color-sky-mid: #3d86ee;
+  --color-sky-bottom: #7cc0ff;
+  --color-ink: #0b1220;
+  --color-ink-muted: #5b6474;
+  --color-flame: #f5a524;
+  --color-pop-bg: #202124;
+  --color-pop-surface: #2b2c30;
+  --color-pop-muted: #9aa0a6;
+  --color-dash-bg: #0a0a0a;
+  --color-dash-card: #141414;
+  --color-dash-line: #262626;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Sky with a faint grid, used by the lower sections */
+.sky {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px) 0 0 / 72px 72px,
+    linear-gradient(180deg, #1f5fd6 0%, #3d86ee 52%, #8fcaff 100%);
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(40px);
+  }
+}
+.cloud-drift {
+  animation: drift 14s ease-in-out infinite alternate;
+}
+.cloud-drift-slow {
+  animation: drift 22s ease-in-out infinite alternate-reverse;
+}
+
+/* Page entrance, like PortFly: each block fades in from a blur, staggered with --delay.
+   Inside a .scroll-reveal block the animation waits until the block is in view. */
+@keyframes blur-in {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(18px);
+  }
+}
+.rise,
+.reveal {
+  animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) both;
+}
+/* .reveal-kids: every direct child reveals, one after another */
+.reveal-kids > * {
+  animation: blur-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal-kids > :nth-child(2) {
+  animation-delay: 0.12s;
+}
+.reveal-kids > :nth-child(3) {
+  animation-delay: 0.24s;
+}
+.reveal-kids > :nth-child(n + 4) {
+  animation-delay: 0.36s;
+}
+.scroll-reveal .reveal,
+.scroll-reveal .reveal-kids > * {
+  animation-play-state: paused;
+}
+.scroll-reveal.in-view .reveal,
+.scroll-reveal.in-view .reveal-kids > * {
+  animation-play-state: running;
+}
+
+/* MacBook demo, one 12s story on a loop (positions are in the 1200 x 750 stage):
+   Submit on LeetCode -> Accepted -> open StreakSync -> Check now -> LeetCode turns done
+   -> close -> Chrome notification about what's still left */
+.demo-cursor,
+.demo-popup,
+.demo-before,
+.demo-after,
+.demo-spin,
+.demo-toast,
+.demo-result-before,
+.demo-result-after,
+.demo-submit,
+.demo-icon {
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  /* Start the story once the laptop has faded in */
+  animation-delay: 1.4s;
+}
+/* ?demo=<seconds> freezes every part at that moment */
+.demo-frozen [class*="demo-"] {
+  animation-delay: var(--demo-delay) !important;
+  animation-play-state: paused !important;
+}
+
+@keyframes demo-cursor {
+  0%,
+  2% {
+    transform: translate(596px, 427px);
+  }
+  9%,
+  10% {
+    transform: translate(635px, 141px);
+  }
+  11% {
+    transform: translate(635px, 141px) scale(0.85);
+  }
+  12%,
+  28% {
+    transform: translate(635px, 141px);
+  }
+  37%,
+  38% {
+    transform: translate(1012px, 99px);
+  }
+  39% {
+    transform: translate(1012px, 99px) scale(0.85);
+  }
+  40%,
+  44% {
+    transform: translate(1012px, 99px);
+  }
+  50%,
+  51% {
+    transform: translate(876px, 313px);
+  }
+  52% {
+    transform: translate(876px, 313px) scale(0.85);
+  }
+  53%,
+  66% {
+    transform: translate(876px, 313px);
+  }
+  73% {
+    transform: translate(596px, 427px);
+  }
+  74% {
+    transform: translate(596px, 427px) scale(0.85);
+  }
+  75%,
+  100% {
+    transform: translate(596px, 427px);
+  }
+}
+.demo-cursor {
+  animation-name: demo-cursor;
+  transform-origin: 4px 3px;
+}
+
+@keyframes demo-submit {
+  0%,
+  10%,
+  13%,
+  100% {
+    filter: none;
+  }
+  11% {
+    filter: brightness(1.35);
+  }
+}
+.demo-submit {
+  animation-name: demo-submit;
+}
+
+@keyframes demo-result-before {
+  0%,
+  12% {
+    opacity: 1;
+  }
+  13%,
+  97% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.demo-result-before {
+  animation-name: demo-result-before;
+}
+@keyframes demo-result-after {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  14%,
+  96% {
+    opacity: 1;
+    transform: none;
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.demo-result-after {
+  animation-name: demo-result-after;
+}
+
+@keyframes demo-icon {
+  0%,
+  38%,
+  76%,
+  100% {
+    background: transparent;
+  }
+  39%,
+  75% {
+    background: rgba(255, 255, 255, 0.14);
+  }
+}
+.demo-icon {
+  animation-name: demo-icon;
+}
+
+@keyframes demo-popup {
+  0%,
+  39% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  41%,
+  74% {
+    opacity: 1;
+    transform: none;
+  }
+  76%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.demo-popup {
+  animation-name: demo-popup;
+}
+@keyframes demo-before {
+  0%,
+  57% {
+    opacity: 1;
+  }
+  58%,
+  100% {
+    opacity: 0;
+  }
+}
+.demo-before {
+  animation-name: demo-before;
+}
+@keyframes demo-after {
+  0%,
+  57% {
+    opacity: 0;
+  }
+  58%,
+  100% {
+    opacity: 1;
+  }
+}
+.demo-after {
+  animation-name: demo-after;
+}
+@keyframes demo-spin {
+  0%,
+  52% {
+    transform: rotate(0);
+  }
+  58%,
+  100% {
+    transform: rotate(720deg);
+  }
+}
+.demo-spin {
+  animation-name: demo-spin;
+}
+
+@keyframes demo-toast {
+  0%,
+  79% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  82%,
+  95% {
+    opacity: 1;
+    transform: none;
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+.demo-toast {
+  animation-name: demo-toast;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud-drift,
+  .cloud-drift-slow,
+  .rise,
+  .reveal,
+  .reveal-kids > * {
+    animation: none;
+  }
+  /* Show one still frame: popup open with LeetCode done */
+  .demo-cursor,
+  .demo-toast,
+  .demo-before,
+  .demo-result-before {
+    animation: none;
+    opacity: 0;
+  }
+  .demo-popup,
+  .demo-after,
+  .demo-result-after,
+  .demo-spin,
+  .demo-icon,
+  .demo-submit {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Native smooth scroll for pages without Lenis; Lenis turns it off while it runs */
+html:not(.lenis) {
+  scroll-behavior: smooth;
+}
+
+/* Font rule, same as PortFly. In @layer base so a utility class can still override it.
+   Fraunces (soft, light) = main headings. Geist = text and small headings.
+   Geist Mono = small uppercase labels and code. */
+@layer base {
+  h1,
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: 330;
+    letter-spacing: -0.045em;
+    font-variation-settings:
+      "SOFT" 100,
+      "WONK" 0,
+      "opsz" 144;
+  }
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Uninstalled page: a tear rolls down the sad face */
+@keyframes tear {
+  0%,
+  20% {
+    opacity: 0;
+    transform: translateY(0) scale(0.6);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(4px) scale(1);
+  }
+  85% {
+    opacity: 0.9;
+    transform: translateY(38px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(46px) scale(0.8);
+  }
+}
+.tear {
+  animation: tear 2.6s ease-in infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tear {
+    animation: none;
+    opacity: 0;
+  }
+}

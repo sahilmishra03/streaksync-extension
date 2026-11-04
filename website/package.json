@@ -1,0 +1,35 @@
+{
+  "name": "streaksync-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node ../scripts/zip-extension.mjs",
+    "dev": "next dev",
+    "prebuild": "node ../scripts/zip-extension.mjs",
+    "build": "next build",
+    "start": "npx --yes http-server out -p 3000 -s",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run build"
+  },
+  "dependencies": {
+    "lenis": "^1.3.27",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

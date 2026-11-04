@@ -18,3 +18,10 @@ SENDER_NAME = "StreakSync"
 [[kv_namespaces]]
 binding = "STORE"
 id = "dd1c1e76563a4fae940c75bf1ffcf0e8"
+
+# Anonymous usage analytics for the admin dashboard
+[[d1_databases]]
+binding = "DB"
+database_name = "streaksync-analytics"
+database_id = "49e78f4c-d2c3-4139-b9c7-8e70936f68b5"
+migrations_dir = "migrations"
