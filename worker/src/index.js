@@ -30,7 +30,7 @@ import { LOGO_PNG_BASE64 } from './logo.js';
 
 const LOGO_BYTES = Uint8Array.from(atob(LOGO_PNG_BASE64), (c) => c.charCodeAt(0));
 // Links shown in emails. Override with SITE_URL / PUBLIC_URL vars once the real domain is live.
-const DEFAULT_SITE_URL = 'https://github.com/sahilmishra03/streaksync-extension';
+const DEFAULT_SITE_URL = 'https://streaksync.sahilmishra.dev';
 const DEFAULT_PUBLIC_URL = 'https://streaksync-api.sahilmishra03032005.workers.dev';
 
 const MAX_BODY_BYTES = 4096;

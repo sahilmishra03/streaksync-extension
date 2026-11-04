@@ -42,5 +42,5 @@ Work in this order.
 - [x] CI/CD: `ci.yml` (format, tests, website build, zip artifact), `release.yml` (version bump on main -> tag, GitHub release, optional Chrome Web Store publish), `deploy.yml` (worker + Vercel after CI)
 
 ## Later
-- [ ] Set `SITE_URL` / `PUBLIC_URL` worker vars once the domain is live (emails link to the GitHub repo until then)
+- [x] Set `SITE_URL` / `PUBLIC_URL` worker vars once the domain is live (emails link to the GitHub repo until then)
 - [ ] Add repo secrets for deploys (`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, optional `VERCEL_*`, `CWS_*`)

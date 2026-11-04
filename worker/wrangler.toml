@@ -13,6 +13,7 @@ crons = ["*/5 * * * *"]
 GITHUB_CLIENT_ID = "Ov23linJqaHHMZAjZ0JU"
 SENDER_EMAIL = "sahilmishra03032005@gmail.com"
 SENDER_NAME = "StreakSync"
+SITE_URL = "https://streaksync.sahilmishra.dev"
 
 # Stores each user's settings and encrypted GitHub token
 [[kv_namespaces]]
