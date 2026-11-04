@@ -1,5 +1,9 @@
 # StreakSync ⚡
 
+<div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin: 24px 0;">
+<img src="https://github.com/sahilmishra03/streaksync-extension/raw/main/website/public/logo-mark.png" alt="StreakSync Logo" width="120" height="120">
+</div>
+
 > **Never break your GitHub, LeetCode, and GeeksforGeeks streaks.**
 
 A free, open-source Chrome extension and companion web service that keeps your coding momentum alive. StreakSync tracks your daily problem solving and commits across GitHub, LeetCode, and GeeksforGeeks, sending smart browser alerts and daily reminder emails before midnight.
@@ -121,3 +125,4 @@ Continuous integration is orchestrated through GitHub Actions:
 ## 📄 License
 
 MIT © [Sahil Mishra](https://sahilmishra.dev)
+
