@@ -6,7 +6,7 @@ Users don't need any of this. It's for the maintainer, who deploys it once.
 
 - `POST /github/token`: finishes GitHub sign-in using the client secret, which must not ship in the extension.
 - `PUT /account` / `DELETE /account`: saves or deletes a user's settings. Requires the user's GitHub token, and the account is keyed by their GitHub user id.
-- **Cron every 5 minutes:** finds users whose last reminder time has passed today (in their time zone), checks their tracked platforms, and emails them through Brevo about the unfinished ones. Nothing is sent if all are done. Each user is processed at most once a day. If a site can't be reached, it retries for up to 3 hours.
+- **Cron every 5 minutes:** finds each reminder slot that is due today (in the user's time zone), checks their tracked platforms, and emails them through Brevo about the unfinished ones. Nothing is sent if all are done. Each slot is processed once per day. If a site can't be reached, it retries for up to 3 hours.
 
 ## Free-plan limits
 

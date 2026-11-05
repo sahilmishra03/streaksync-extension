@@ -37,7 +37,7 @@ export default function EmailsPage() {
     <>
       <PageHead
         title="Emails"
-        desc="Each user gets at most one email a day, at their last reminder time, and only if something is unfinished."
+        desc="Each user gets an email at every selected reminder time, only while something is unfinished."
       />
 
       <div className="grid gap-4 sm:grid-cols-3 md:gap-6">

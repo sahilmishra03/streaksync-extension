@@ -2,8 +2,8 @@
 //
 // - Shows a browser notification at each reminder time, listing only unfinished platforms.
 // - Keeps the popup's status fresh with a check every 30 minutes.
-// - Saves the user's settings to the StreakSync server, which sends the reminder email at the
-//   last reminder time of the day, even when this browser is closed.
+// - Saves the user's settings to the StreakSync server, which sends an email at every reminder
+//   time while something remains unfinished, even when this browser is closed.
 
 import { STREAKSYNC_CONFIG, DEFAULT_REMINDER_TIMES, MAX_REMINDER_TIMES } from './config.js';
 import { PLATFORMS, USERNAME_RE, TIME_RE, todayIn, minutesNowIn, timeToMinutes, checkPlatform } from './platforms.js';
@@ -378,7 +378,7 @@ async function saveSettings(input) {
   return { account };
 }
 
-// Sends the settings to the server, which emails at the last reminder time each day
+// Sends the settings to the server, which emails at every reminder time each day
 async function syncAccount() {
   const settings = await getSettings();
   const { githubToken } = await chrome.storage.local.get('githubToken');
@@ -399,7 +399,7 @@ async function syncAccount() {
     });
     const body = await res.json().catch(() => ({}));
     const state = res.ok
-      ? { status: 'saved', email: body.email, emailTime: body.emailTime, at: Date.now() }
+      ? { status: 'saved', email: body.email, emailTimes: body.emailTimes, at: Date.now() }
       : { status: 'error', error: body.error || `Server returned HTTP ${res.status}`, at: Date.now() };
     await chrome.storage.local.set({ accountSync: state });
     return state;

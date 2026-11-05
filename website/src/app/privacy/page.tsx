@@ -105,7 +105,7 @@ export default function Privacy() {
               <li>The platforms you track, your usernames, reminder times and time zone.</li>
             </ul>
             <p>
-              The server uses this once a day, at your last reminder time, to check your streaks and
+              The server uses this at each selected reminder time to check your streaks and
               email you about anything unfinished. Emails are sent through Brevo.
             </p>
           </Card>

@@ -8,7 +8,7 @@ import type { BrandId } from "@/lib/brandIcons";
  * One day in 12 seconds ("hw-*" classes in landing.css).
  * The bar runs from 10 AM to 10 PM. At each reminder a notification lists only what's left:
  * GitHub gets done before 2 PM, LeetCode before 6 PM, GFG never does,
- * so at 10 PM one email goes out about GFG.
+ * so every selected reminder time can send an email about the unfinished platforms.
  */
 
 const TIMES = ["10 AM", "2 PM", "6 PM", "10 PM"];

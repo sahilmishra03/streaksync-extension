@@ -18,7 +18,7 @@ export type ExtState = {
   version: string;
   settings: ExtSettings;
   github: { connected: boolean; login: string; email: string };
-  accountSync: { status: string; email?: string; emailTime?: string; error?: string } | null;
+  accountSync: { status: string; email?: string; emailTimes?: string[]; error?: string } | null;
   limits: { maxReminderTimes: number; defaultReminderTimes: string[] };
 };
 

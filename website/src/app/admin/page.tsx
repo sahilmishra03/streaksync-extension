@@ -82,7 +82,7 @@ export default function Overview() {
         <Card>
           <CardHead
             title="Today's emails"
-            desc="Sent at each user's last reminder time"
+            desc="Sent at each selected reminder time"
             right={
               <Link
                 href="/admin/emails/"

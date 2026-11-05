@@ -7,9 +7,9 @@
 //   Both /account calls need "Authorization: Bearer <GitHub token>"; the account is keyed by GitHub user id.
 //
 // Scheduled (cron, every 5 minutes):
-//   For each user whose last reminder time has passed today (in their time zone), check every
-//   tracked platform. Email only the platforms that are not done yet. If all are done, send nothing.
-//   Each user is processed at most once per day, so this works even when their laptop is off.
+//   For each reminder slot that is due today (in the user's time zone), check every tracked
+//   platform. Email only the platforms that are not done yet. If all are done, send nothing.
+//   Each reminder slot is tracked independently, so this works even when their laptop is off.
 //
 // Configuration (see worker/README.md):
 //   vars:    GITHUB_CLIENT_ID, SENDER_EMAIL, SENDER_NAME
@@ -188,7 +188,7 @@ async function handleSaveAccount(request, env) {
   };
   await putRecord(env, key, record, existing.metadata?.d || '');
 
-  return json({ saved: true, email: record.email, emailTime: lastTime(record.reminderTimes) });
+  return json({ saved: true, email: record.email, emailTimes: record.reminderTimes });
 }
 
 async function handleDeleteAccount(request, env) {
@@ -198,18 +198,21 @@ async function handleDeleteAccount(request, env) {
   return json({ deleted: true });
 }
 
-function lastTime(times) {
+function lastReminderTime(times) {
   return times[times.length - 1];
 }
 
 // Metadata lets the cron decide who is due from a single list() call, without reading every record
-async function putRecord(env, key, record, processedDate) {
+async function putRecord(env, key, record, processedDate = '') {
   await env.STORE.put(key, JSON.stringify(record), {
     metadata: {
       tz: record.timeZone,
-      t: lastTime(record.reminderTimes),
+      ts: record.reminderTimes.join(','),
+      t: lastReminderTime(record.reminderTimes),
       e: Boolean(record.emailEnabled && record.email),
-      d: processedDate
+      d: processedDate,
+      sd: record.reminderSentDate || '',
+      st: (record.reminderSentTimes || []).join(',')
     }
   });
 }
@@ -217,39 +220,57 @@ async function putRecord(env, key, record, processedDate) {
 // ---------- Scheduled reminders ----------
 
 export async function runReminders(env) {
-  const due = [];
+  const due = new Map();
   let cursor;
   do {
     const page = await env.STORE.list({ prefix: 'u:', cursor });
     for (const { name, metadata: m } of page.keys) {
-      if (!m || !m.e || !isValidTimeZone(m.tz) || !TIME_RE.test(m.t || '')) continue;
+      if (!m || !m.e || !isValidTimeZone(m.tz)) continue;
       const today = todayIn(m.tz);
       if (m.d === today) continue;
-      const late = minutesNowIn(m.tz) - timeToMinutes(m.t);
-      if (late >= 0 && late < EMAIL_WINDOW_MINUTES) due.push({ key: name, today, late });
+      const now = minutesNowIn(m.tz);
+      const sentTimes =
+        m.sd === today
+          ? String(m.st || '')
+              .split(',')
+              .filter(Boolean)
+          : [];
+      const times = String(m.ts || m.t || '')
+        .split(',')
+        .filter((t) => TIME_RE.test(t));
+      const slots = times.filter((time) => {
+        const late = now - timeToMinutes(time);
+        return !sentTimes.includes(time) && late >= 0 && late < EMAIL_WINDOW_MINUTES;
+      });
+      if (slots.length) due.set(name, { key: name, today, slots });
     }
     cursor = page.list_complete ? undefined : page.cursor;
   } while (cursor);
 
-  // Most overdue first; the rest are picked up by the next run in 5 minutes
-  due.sort((a, b) => b.late - a.late);
   const results = [];
-  for (const item of due.slice(0, MAX_USERS_PER_RUN)) {
-    try {
-      results.push(await processUser(env, item.key, item.today));
-    } catch (err) {
-      console.error('Processing failed for', item.key, err);
-      results.push({ key: item.key, status: 'error' });
+  for (const item of [...due.values()].slice(0, MAX_USERS_PER_RUN)) {
+    for (const reminderTime of item.slots) {
+      try {
+        results.push(await processUser(env, item.key, item.today, reminderTime));
+      } catch (err) {
+        console.error('Processing failed for', item.key, err);
+        results.push({ key: item.key, status: 'error', reminderTime });
+      }
     }
   }
   if (results.length) console.log('Reminder run:', JSON.stringify(results));
   return results;
 }
 
-async function processUser(env, key, today) {
+async function processUser(env, key, today, reminderTime) {
   const stored = await env.STORE.get(key);
   if (!stored) return { key, status: 'missing' };
   const record = JSON.parse(stored);
+  if (record.lastRun?.date === today && record.lastRun.status === 'all-done') {
+    return { key, status: 'all-done' };
+  }
+  const sentTimes = record.reminderSentDate === today ? record.reminderSentTimes || [] : [];
+  if (sentTimes.includes(reminderTime)) return { key, status: 'already-sent', reminderTime };
   const token = await decryptToken(record.tokenEnc, env.TOKEN_KEY);
 
   const ids = Object.keys(PLATFORMS).filter((id) => record.track?.[id]);
@@ -283,9 +304,10 @@ async function processUser(env, key, today) {
 
   const pending = ids.filter((id) => !results[id].doneToday);
   const streaks = Object.fromEntries(ids.map((id) => [id, results[id].streak]));
-  // lastRun is shown in the admin panel. Only written when the day is settled (one write per user per day).
   if (pending.length === 0) {
     record.lastRun = { date: today, status: 'all-done', at: new Date().toISOString(), pending: [], streaks };
+    record.reminderSentDate = today;
+    record.reminderSentTimes = record.reminderTimes;
     await putRecord(env, key, record, today);
     await bumpStat(env, 'all_done');
     return { key, status: 'all-done' };
@@ -296,10 +318,19 @@ async function processUser(env, key, today) {
     await bumpStat(env, 'email_failed');
     return { key, status: 'email-failed' };
   }
-  record.lastRun = { date: today, status: 'emailed', at: new Date().toISOString(), pending, streaks };
-  await putRecord(env, key, record, today);
+  record.reminderSentDate = today;
+  record.reminderSentTimes = [...new Set([...sentTimes, reminderTime])];
+  record.lastRun = {
+    date: today,
+    status: 'emailed',
+    at: new Date().toISOString(),
+    reminderTime,
+    pending,
+    streaks
+  };
+  await putRecord(env, key, record);
   await bumpStat(env, 'emails_sent');
-  return { key, status: 'emailed', pending };
+  return { key, status: 'emailed', reminderTime, pending };
 }
 
 async function sendEmail(env, record, pending, streaks) {
@@ -385,17 +416,17 @@ export function buildReminderEmail(login, pending, streaks, brand = {}) {
   } else if (rows.length === 2) {
     subject = `😬 2 streaks are sweating: ${names.join(' and ')}`;
     title = `${names.join(' and ')} are still waiting.`;
-    line = 'Two quick wins and the evening is yours again.';
+    line = 'Two quick wins and the rest of your day is yours again.';
     caption = `Your ${names.join(' and ')} streaks watching the clock`;
     meme = MEMES.panic;
   } else {
     subject = `🔥 This is fine. (It is not. ${rows.length} streaks left today)`;
     title = 'Everything is fine. Probably.';
     line = `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]} are all still open. Start with the easiest one.`;
-    caption = `You, with 0 of ${rows.length} done tonight`;
+    caption = `You, with 0 of ${rows.length} done today`;
     meme = MEMES.fine;
   }
-  const stakeText = atStake > 0 ? `${atStake} streak day${atStake === 1 ? '' : 's'} on the line tonight.` : '';
+  const stakeText = atStake > 0 ? `${atStake} streak day${atStake === 1 ? '' : 's'} on the line today.` : '';
 
   const text = [
     `Hi ${login},`,
@@ -685,7 +716,7 @@ async function handleAdminUsers(request, env) {
     }
     const tz = isValidTimeZone(r.timeZone) ? r.timeZone : 'UTC';
     const today = todayIn(tz);
-    const emailTime = lastTime(r.reminderTimes || []) || '';
+    const emailTime = lastReminderTime(r.reminderTimes || []) || '';
     const late = emailTime ? minutesNowIn(tz) - timeToMinutes(emailTime) : -1;
     let todayStatus;
     if (!r.emailEnabled || !r.email) todayStatus = 'email-off';

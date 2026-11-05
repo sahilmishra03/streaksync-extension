@@ -15,11 +15,6 @@ const PLATFORMS: { id: PlatformId; name: string; desc: string }[] = [
 type UserPlatform = "leetcode" | "gfg";
 type Note = { text: string; kind: "ok" | "err" | "muted"; link?: { href: string; label: string } };
 
-function formatTime(t: string) {
-  const [h, m] = t.split(":").map(Number);
-  return new Date(2000, 0, 1, h, m).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-}
-
 export function SettingsApp() {
   const [state, setState] = useState<ExtState | null>(null);
   const [phase, setPhase] = useState<"loading" | "missing" | "ready" | "error">("loading");
@@ -171,7 +166,6 @@ export function SettingsApp() {
 
   const maxTimes = state?.limits.maxReminderTimes ?? 4;
   const sortedTimes = [...new Set(times.filter(Boolean))].sort();
-  const emailTime = sortedTimes.at(-1);
 
   function updateTime(i: number, value: string) {
     setTimes((t) => t.map((x, j) => (j === i ? value : x)));
@@ -224,7 +218,7 @@ export function SettingsApp() {
         });
       } else if (account?.status === "saved") {
         setSaveNote({
-          text: `Saved. Email to ${account.email || "you"} at ${formatTime(account.emailTime || emailTime || "22:00")} if something is unfinished.`,
+          text: `Saved. Email to ${account.email || "you"} at every selected reminder time if something is unfinished.`,
           kind: "ok",
         });
       } else {
@@ -358,7 +352,7 @@ export function SettingsApp() {
       >
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {times.map((t, i) => {
-            const isEmail = emailEnabled && github.connected && t === emailTime;
+            const isEmail = emailEnabled && github.connected;
             return (
               <div
                 key={i}
@@ -402,7 +396,7 @@ export function SettingsApp() {
       {/* Email */}
       <Section
         title="Email"
-        desc={`One email at your last reminder time${emailTime ? ` (${formatTime(emailTime)})` : ""}, only if something is unfinished. It arrives even if your laptop is off.`}
+        desc="An email at every selected reminder time, only if something is unfinished. It arrives even if your laptop is off."
       >
         <label className="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-white/[0.08] bg-[#131315] p-4">
           <span>

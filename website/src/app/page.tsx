@@ -21,7 +21,7 @@ const FAQ = [
   },
   {
     q: "Will I get emails if my laptop is off?",
-    a: "Yes, if you sign in with GitHub and keep email on. The server checks your platforms at your last reminder time and emails your verified GitHub address.",
+    a: "Yes, if you sign in with GitHub and keep email on. The server checks your platforms at every selected reminder time and emails your verified GitHub address when something remains unfinished.",
   },
   {
     q: "What does StreakSync store about me?",

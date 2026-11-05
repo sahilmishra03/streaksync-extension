@@ -121,9 +121,17 @@ test('PUT /account saves an encrypted record with cron metadata', async () => {
   try {
     const res = await call(env, 'PUT', '/account', { token: 'gho_abc', body: ACCOUNT });
     assert.equal(res.status, 200);
-    assert.deepEqual(await res.json(), { saved: true, email: 'me@test.dev', emailTime: '22:00' });
+    assert.deepEqual(await res.json(), { saved: true, email: 'me@test.dev', emailTimes: ['10:00', '22:00'] });
     const { value, metadata } = await env.STORE.getWithMetadata('u:42');
-    assert.deepEqual(metadata, { tz: 'Asia/Kolkata', t: '22:00', e: true, d: '' });
+    assert.deepEqual(metadata, {
+      tz: 'Asia/Kolkata',
+      ts: '10:00,22:00',
+      t: '22:00',
+      e: true,
+      d: '',
+      sd: '',
+      st: ''
+    });
     const rec = JSON.parse(value);
     assert.deepEqual(rec.reminderTimes, ['10:00', '22:00']);
     assert.ok(!value.includes('gho_abc'), 'token must be stored encrypted');
@@ -233,7 +241,7 @@ function platformRoutes({ githubDone, leetcodeDone, githubStatus = 200 }) {
   };
 }
 
-test('cron: emails only the unfinished platform, once a day', { skip: nearMidnight() }, async () => {
+test('cron: emails only the unfinished platform, once per reminder slot', { skip: nearMidnight() }, async () => {
   const env = baseEnv();
   await seedUser(env);
   const f = mockFetch(platformRoutes({ githubDone: true, leetcodeDone: false }));
@@ -246,8 +254,40 @@ test('cron: emails only the unfinished platform, once a day', { skip: nearMidnig
     assert.equal(sent[0].body.to[0].email, 'me@test.dev');
     assert.equal(sent[0].init.headers['api-key'], 'test');
 
-    assert.equal((await runReminders(env)).length, 0, 'second run the same day sends nothing');
-    assert.equal((await env.STORE.getWithMetadata('u:42')).metadata.d, todayUTC());
+    assert.equal((await runReminders(env)).length, 0, 'second run for the same slot sends nothing');
+    const stored = await env.STORE.getWithMetadata('u:42');
+    assert.equal(stored.metadata.d, '');
+    assert.deepEqual(JSON.parse(stored.value).reminderSentTimes, [JSON.parse(stored.value).reminderTimes[0]]);
+  } finally {
+    f.restore();
+  }
+});
+
+test('cron: sends again at a later reminder slot while work remains', { skip: nearMidnight() }, async () => {
+  const env = baseEnv();
+  const first = justPassed();
+  const earlierDate = new Date(Date.now() - 10 * 60 * 1000);
+  const second = `${String(earlierDate.getUTCHours()).padStart(2, '0')}:${String(earlierDate.getUTCMinutes()).padStart(2, '0')}`;
+  const record = {
+    track: { github: true, leetcode: true, gfg: false },
+    leetcodeUsername: 'sahil_lc',
+    gfgUsername: '',
+    reminderTimes: [second, first],
+    timeZone: 'UTC',
+    emailEnabled: true,
+    githubId: 42,
+    githubLogin: 'sahil',
+    email: 'me@test.dev',
+    tokenEnc: await encryptToken('gho_abc', TOKEN_KEY)
+  };
+  await env.STORE.put('u:42', JSON.stringify(record), {
+    metadata: { tz: 'UTC', ts: record.reminderTimes.join(','), t: first, e: true, d: '', sd: '', st: '' }
+  });
+  const f = mockFetch(platformRoutes({ githubDone: true, leetcodeDone: false }));
+  try {
+    const results = await runReminders(env);
+    assert.equal(results.filter((r) => r.status === 'emailed').length, 2);
+    assert.equal(f.calls.filter((c) => c.url.includes('brevo')).length, 2);
   } finally {
     f.restore();
   }
