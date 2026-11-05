@@ -3,10 +3,8 @@
 import { useEffect } from "react";
 
 /*
- * A soft trackpad-style "tick" when a link, button, toggle or summary is clicked.
- * Synthesized with the Web Audio API (a 30 ms filtered noise burst plus a short sine tap),
- * so there is no audio file to download or license. Silent for users who prefer reduced motion,
- * and the AudioContext is only created on the first click (browsers require a user gesture).
+ * A crisp, clean UI click sound (inspired by modern developer sites).
+ * Synthesized using Web Audio API for fast, zero-latency response without static assets.
  */
 const CLICKABLE = "a, button, summary, label, [role='button'], input[type='checkbox']";
 
@@ -14,38 +12,31 @@ export function ClickSound() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let ctx: AudioContext | null = null;
-    let noise: AudioBuffer | null = null;
 
     const play = () => {
       ctx ??= new AudioContext();
-      if (!noise) {
-        noise = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
-        const ch = noise.getChannelData(0);
-        for (let i = 0; i < ch.length; i++)
-          ch[i] = (Math.random() * 2 - 1) * (1 - i / ch.length) ** 4;
+      if (ctx.state === "suspended") {
+        void ctx.resume();
       }
       const t = ctx.currentTime;
 
-      const src = ctx.createBufferSource();
-      src.buffer = noise;
-      const band = ctx.createBiquadFilter();
-      band.type = "bandpass";
-      band.frequency.value = 3200;
-      band.Q.value = 1.2;
-      const g1 = ctx.createGain();
-      g1.gain.value = 0.22;
-      src.connect(band).connect(g1).connect(ctx.destination);
-      src.start(t);
-
+      // Soft mechanical tactile click tone
       const osc = ctx.createOscillator();
-      osc.frequency.setValueAtTime(1500, t);
-      osc.frequency.exponentialRampToValueAtTime(600, t + 0.02);
-      const g2 = ctx.createGain();
-      g2.gain.setValueAtTime(0.08, t);
-      g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
-      osc.connect(g2).connect(ctx.destination);
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      // Fast frequency slide down from 2200Hz to 600Hz in 15ms for a crisp bubble-pop click
+      osc.frequency.setValueAtTime(2200, t);
+      osc.frequency.exponentialRampToValueAtTime(600, t + 0.015);
+
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.015);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
       osc.start(t);
-      osc.stop(t + 0.035);
+      osc.stop(t + 0.018);
     };
 
     const onDown = (e: PointerEvent) => {

@@ -9,10 +9,10 @@ const LINKS = [
   { href: "#faq", label: "FAQ" },
 ];
 
-// Plain white bar with a hairline under it: logo, links, one button
+// Glassmorphism navbar with backdrop blur
 export function Nav() {
   return (
-    <header className="sticky top-0 z-30 border-b border-[#262322]/[0.07] bg-[#fafaf9]/95">
+    <header className="sticky top-0 z-30 border-b border-[#262322]/[0.07] bg-[#fafaf9]/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Logo tone="dark" />
         <nav

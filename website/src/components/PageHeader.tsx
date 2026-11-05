@@ -4,7 +4,7 @@ import { Logo } from "./Logo";
 // Simple top bar for inner pages (privacy, uninstalled), same look as the landing Nav
 export function PageHeader() {
   return (
-    <header className="border-b border-[#262322]/[0.07] bg-[#fafaf9]">
+    <header className="sticky top-0 z-30 border-b border-[#262322]/[0.07] bg-[#fafaf9]/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Logo tone="dark" />
         <Link href="/" className="text-[13px] text-[#262322]/65 transition hover:text-[#262322]">

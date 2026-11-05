@@ -38,6 +38,9 @@ function listFiles(dir, base = '') {
 const DOS_TIME = 0;
 const DOS_DATE = ((2024 - 1980) << 9) | (1 << 5) | 1;
 
+// Write generated version file to website source so website auto-syncs with extension/manifest.json
+fs.writeFileSync(path.join(root, 'website', 'src', 'lib', 'version.gen.ts'), `export const VERSION = "${version}";\n`);
+
 const locals = [];
 const centrals = [];
 let offset = 0;
