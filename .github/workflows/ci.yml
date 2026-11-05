@@ -35,6 +35,7 @@ jobs:
       - run: npm --prefix website ci
       - run: npx --prefix website prettier --check website/src
       - run: npm --prefix website run lint
+      - run: node scripts/zip-extension.mjs
       - run: npx --prefix website tsc --noEmit -p website
       # prebuild packs the extension zip into website/public, so the build also checks the zip
       - run: npm --prefix website run build
