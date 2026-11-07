@@ -25,6 +25,10 @@ body {
   font-family: var(--font-sans);
 }
 
+em {
+  font-style: normal;
+}
+
 /* Sky with a faint grid, used by the lower sections */
 .sky {
   background:

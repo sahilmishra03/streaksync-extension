@@ -9,6 +9,26 @@ import { STREAKSYNC_CONFIG, DEFAULT_REMINDER_TIMES, MAX_REMINDER_TIMES } from '.
 import { PLATFORMS, USERNAME_RE, TIME_RE, todayIn, minutesNowIn, timeToMinutes, checkPlatform } from './platforms.js';
 
 const PLATFORM_IDS = Object.keys(PLATFORMS);
+const DARK_ICON_PATHS = {
+  16: 'icons/icon16-dark.png',
+  32: 'icons/icon32-dark.png',
+  48: 'icons/icon48-dark.png',
+  128: 'icons/icon128-dark.png'
+};
+const LIGHT_ICON_PATHS = {
+  16: 'icons/icon16.png',
+  32: 'icons/icon32.png',
+  48: 'icons/icon48.png',
+  128: 'icons/icon128.png'
+};
+
+function updateActionIcon() {
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  chrome.action.setIcon({ path: dark ? LIGHT_ICON_PATHS : DARK_ICON_PATHS });
+}
+
+updateActionIcon();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateActionIcon);
 
 export const DEFAULT_SETTINGS = {
   onboarded: false,
