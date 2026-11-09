@@ -63,6 +63,12 @@ export function SettingsApp() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- load the extension's settings on mount
     load(true);
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncTheme = () => extension.setTheme(media.matches ? "dark" : "light").catch(() => {});
+    syncTheme();
+    media.addEventListener("change", syncTheme);
+    return () => media.removeEventListener("change", syncTheme);
   }, [load]);
 
   // Warn before leaving with unsaved changes

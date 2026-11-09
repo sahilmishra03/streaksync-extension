@@ -56,12 +56,16 @@ function call<T>(
   const rt = runtime();
   if (!rt) return Promise.reject(new ExtensionMissingError());
   return new Promise<T>((resolve, reject) => {
-    const timer = setTimeout(
-      () => reject(new Error("The extension didn't answer. Try again.")),
-      timeoutMs,
-    );
+    const timer = setTimeout(() => {
+      reject(
+        new Error(
+          "The extension did not respond. Make sure StreakSync is enabled in chrome://extensions, then reload this page and try again.",
+        ),
+      );
+    }, timeoutMs);
     rt.sendMessage(SITE.extensionId, { action, ...data }, (raw) => {
       clearTimeout(timer);
+      if (rt.lastError) return reject(new ExtensionMissingError());
       const res = raw as Response<T> | undefined;
       if (!res) return reject(new ExtensionMissingError());
       if (res.success) resolve(res.result);
@@ -85,4 +89,5 @@ export const extension = {
     ),
   saveSettings: (settings: SaveInput) =>
     call<{ account: ExtState["accountSync"] & { status: string } }>("saveSettings", { settings }),
+  setTheme: (theme: "light" | "dark") => call<{ updated: boolean }>("setTheme", { theme }),
 };

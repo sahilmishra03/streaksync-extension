@@ -216,6 +216,16 @@ test('background: first install opens the website setup page', () => {
   assert.match(src, /WEBSITE_URL\}\/settings\//);
 });
 
+test('settings page theme updates the matching extension icon assets', () => {
+  const src = read('extension/background.js');
+  assert.match(src, /setTheme: async/);
+  assert.match(src, /theme === 'dark' \? DARK_ICON_PATHS : LIGHT_ICON_PATHS/);
+  for (const size of [16, 32, 48, 128]) {
+    assert.ok(fs.existsSync(path.join(root, `extension/icons/icon${size}-dark.png`)));
+    assert.ok(fs.existsSync(path.join(root, `extension/icons/icon${size}.png`)));
+  }
+});
+
 test('no secrets in the extension', () => {
   const files = fs.readdirSync(path.join(root, 'extension')).filter((f) => f.endsWith('.js'));
   for (const f of files) {

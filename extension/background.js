@@ -22,13 +22,18 @@ const LIGHT_ICON_PATHS = {
   128: 'icons/icon128.png'
 };
 
-function updateActionIcon() {
-  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-  chrome.action.setIcon({ path: dark ? LIGHT_ICON_PATHS : DARK_ICON_PATHS });
+async function updateActionIcon(theme) {
+  if (!theme) {
+    const stored = await chrome.storage.local.get('iconTheme');
+    theme = stored.iconTheme || 'light';
+  }
+  const paths = theme === 'dark' ? DARK_ICON_PATHS : LIGHT_ICON_PATHS;
+  await chrome.action.setIcon({ path: paths });
 }
 
 updateActionIcon();
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateActionIcon);
+chrome.runtime.onStartup.addListener(() => updateActionIcon());
+chrome.runtime.onInstalled.addListener(() => updateActionIcon());
 
 export const DEFAULT_SETTINGS = {
   onboarded: false,
@@ -227,6 +232,12 @@ const WEBSITE_ORIGINS = new Set(STREAKSYNC_CONFIG.SETTINGS_ORIGINS);
 
 const externalHandlers = {
   getState: () => getState(),
+  setTheme: async ({ theme }) => {
+    if (theme !== 'light' && theme !== 'dark') throw new Error('Invalid theme');
+    await chrome.storage.local.set({ iconTheme: theme });
+    await updateActionIcon(theme);
+    return { updated: true };
+  },
   connectGitHub: () => connectGitHub(),
   disconnectGitHub: () => disconnectGitHub(),
   detectAccount: ({ platform }) => detectAccount(platform),
