@@ -1,5 +1,4 @@
 // Public site settings. Change these in one place.
-import { VERSION } from "./version.gen";
 
 export const SITE = {
   name: "StreakSync",
@@ -13,7 +12,7 @@ export const SITE = {
   discordUrl: "https://discord.com/users/889514676067635250",
   // Served by the website itself; scripts/zip-extension.mjs builds it before every build
   downloadUrl: "/streaksync-extension.zip",
-  version: VERSION,
+  version: "1.0.1",
   // Footer credit: the name is shown, the link goes to the personal site
   authorName: "Sahil Mishra",
   authorUrl: "https://sahilmishra.dev",
